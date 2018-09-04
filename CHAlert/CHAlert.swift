@@ -104,7 +104,7 @@ class CHAlert: UIView {
     // MARK: 菊花加载
     func hud(msg:String){
         
-        alerAnimal(false)
+        alerAnimal(false,hud: true)
         let replicator = CAReplicatorLayer()
         replicator.bounds = CGRect(x: 0, y: 0, width: 60, height: 60)
         replicator.position = CGPoint(x: 40, y: 40)
@@ -153,10 +153,9 @@ class CHAlert: UIView {
     // MARK: 快速提示消息
     func alert(message:String, during:TimeInterval){
         backgroundColor = .clear
-        alerAnimal(false)
+        alerAnimal(false,hud: true)
         let msg = message as NSString
         let size = msg.boundingRect(with: CGSize(width: SCREEN_W - 40, height: CGFloat.greatestFiniteMagnitude), options: [.usesLineFragmentOrigin,.usesFontLeading], attributes: [NSAttributedStringKey.font:UIFont.systemFont(ofSize: 20)], context: nil).size
-        
         titleLabel.cbgColor(.black).ctextColor(.white).isNewLine(true)
         titleLabel.layer.cornerRadius = 10
         titleLabel.layer.masksToBounds = true
@@ -171,16 +170,17 @@ class CHAlert: UIView {
         titleLabel.text = message
 
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + during) {
-            self.alerAnimal(true)
+            self.alerAnimal(true,hud:true)
         }
     }
     // MARK: 菊花消失
     func hide(){
-        alerAnimal(true)
+        _ = superview?.subviews.filter({$0 is CHAlert}).map({$0.removeFromSuperview()})
     }
     // MARK: 提示弹窗
     func alert(btnTitle:String,msg:String, handler:operationClosure?){
-        alerAnimal(false)
+        UIApplication.shared.keyWindow?.addSubview(self)
+        alerAnimal(false,hud:false)
         let textLabel = UILabel.baseLabel
         textLabel.text = msg
         customView.addSubview(textLabel)
@@ -196,7 +196,8 @@ class CHAlert: UIView {
     
     // MARK: 多操作弹窗
     func alert(_ leftbtn:String, _ leftHander:operationClosure?, msg:String, rightbtn:String, rightHander:operationClosure?){
-        alerAnimal(false)
+         UIApplication.shared.keyWindow?.addSubview(self)
+        alerAnimal(false,hud:false)
         let textLabel = UILabel.baseLabel
         textLabel.text = msg
         customView.addSubview(textLabel)
@@ -215,7 +216,7 @@ class CHAlert: UIView {
     }
     
     // MARK: 弹框动画
-    private func alerAnimal(_ close:Bool){
+    private func alerAnimal(_ close:Bool, hud:Bool){
         if close{
             UIView.animate(withDuration: AnimalDuring, animations: {
                 self.contentView.transform =  CGAffineTransform.init(scaleX: 0.01, y: 0.01)
@@ -227,14 +228,14 @@ class CHAlert: UIView {
         contentView.transform = CGAffineTransform.init(scaleX: 0.01, y: 0.01)
             UIView.animate(withDuration: AnimalDuring, animations: {
                 self.contentView.transform = CGAffineTransform.identity
-                self.backgroundColor = UIColor.black.withAlphaComponent(0.3)
+                self.backgroundColor = hud ? .clear : UIColor.black.withAlphaComponent(0.3)
             }) { (completion) in
             }
         }
     }
     // MARK: 按钮操作
     @objc private func confirm(sender:UIButton){
-        alerAnimal(true)
+        alerAnimal(true,hud: false)
         if confirmAction != nil{
             confirmAction!(sender)
         }
