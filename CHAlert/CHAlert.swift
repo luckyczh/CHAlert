@@ -12,7 +12,7 @@ import SnapKit
 let ButtonH = 40
 let MainColor = UIColor.brown
 let AnimalDuring = 0.3
-var charlertKey = "charlertKey"
+var charlertKey = "\0"
 extension UIView{
      var chalert:CHAlert{
         get{
@@ -35,8 +35,11 @@ class CHAlert: UIView {
     let customView = UIView()
     let contentView = UIView()
     typealias operationClosure = (_ sender:UIButton) -> Void
+    typealias snpMakerClosure = (_ make:ConstraintMaker) -> Void
     var confirmAction : operationClosure?
     var cancelAction : operationClosure?
+    var constrainsClosure : snpMakerClosure?
+    
     init(){
         super.init(frame: UIScreen.main.bounds)
         initUI()
@@ -179,7 +182,9 @@ class CHAlert: UIView {
     }
     // MARK: 提示弹窗
     func alert(btnTitle:String,msg:String, handler:operationClosure?){
-        UIApplication.shared.keyWindow?.addSubview(self)
+        if superview == nil{
+            UIApplication.shared.keyWindow?.addSubview(self)
+        }
         alerAnimal(false,hud:false)
         let textLabel = UILabel.baseLabel
         textLabel.text = msg
@@ -196,7 +201,9 @@ class CHAlert: UIView {
     
     // MARK: 多操作弹窗
     func alert(_ leftbtn:String, _ leftHander:operationClosure?, msg:String, rightbtn:String, rightHander:operationClosure?){
-         UIApplication.shared.keyWindow?.addSubview(self)
+        if superview == nil{
+            UIApplication.shared.keyWindow?.addSubview(self)
+        }
         alerAnimal(false,hud:false)
         let textLabel = UILabel.baseLabel
         textLabel.text = msg
@@ -212,6 +219,17 @@ class CHAlert: UIView {
         rightButton.ctitle(rightbtn).ctitleColor(.white).cbgColor(MainColor).ctarget(self, action: #selector(confirm(sender:)))
         confirmAction = rightHander
         addButton([leftButton,rightButton])
+        
+    }
+    // MARK: 添加自定义视图
+    func alert(_ cView:UIView,leftBtn:String,leftHandler:operationClosure?,rightBtn:String,rightHandler:operationClosure?,alertConstrain:snpMakerClosure?){
+        alert(leftBtn, leftHandler, msg: "", rightbtn: rightBtn, rightHander: rightHandler)
+        _ = customView.subviews.map({$0.removeFromSuperview()})
+        customView.addSubview(cView)
+        cView.snp.makeConstraints { (make) in
+            (alertConstrain == nil) ? _ = make.edges.equalToSuperview() : alertConstrain!(make)
+        }
+      
         
     }
     

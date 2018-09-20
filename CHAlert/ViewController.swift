@@ -11,7 +11,7 @@ import UIKit
 class ViewController: UIViewController  {
     override func viewDidLoad() {
         super.viewDidLoad()
-      
+     
     }
 
    
@@ -35,10 +35,19 @@ class ViewController: UIViewController  {
             
         }
     }
+    
+    @IBAction func customAlert(_ sender: UIButton) {
+        let textField = UITextField()
+        textField.placeholder = "这是自定义弹窗视图"
+        CHAlert().alert(textField, leftBtn: "ceshi", leftHandler: nil, rightBtn: "cese", rightHandler: nil) { (make) in
+            make.edges.equalToSuperview().inset(UIEdgeInsetsMake(10, 20, 10, 20))
+        }
+    }
     @IBAction func alertOne(_ sender: Any) {
         CHAlert().alert(btnTitle: "确认", msg: "测试中") { (sender) in
-            
+
         }
+      
     }
 }
 

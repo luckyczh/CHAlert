@@ -63,6 +63,7 @@
 		BA7C4DCE21391B6400438E9E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BA7C4DDB21391EC600438E9E /* CHAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CHAlert.swift; sourceTree = "<group>"; };
 		BA7C4DDD2139200A00438E9E /* CHExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CHExtension.swift; sourceTree = "<group>"; };
+		BAD983A1213FD8290071B2E6 /* CHAlert-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CHAlert-Bridging-Header.h"; sourceTree = "<group>"; };
 		DA36EFCC6EA8472782022F72 /* Pods_CHAlertTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CHAlertTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F3BC3BC1588DED693709F9EF /* Pods-CHAlertTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CHAlertTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CHAlertTests/Pods-CHAlertTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -139,6 +140,7 @@
 				BA7C4DDB21391EC600438E9E /* CHAlert.swift */,
 				BA7C4DDD2139200A00438E9E /* CHExtension.swift */,
 				BA49AB19213CD48E003A439B /* Macro.swift */,
+				BAD983A1213FD8290071B2E6 /* CHAlert-Bridging-Header.h */,
 			);
 			path = CHAlert;
 			sourceTree = "<group>";
@@ -571,6 +573,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.chengdu.CHAlert;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "$SRCROOT/CHAlert/CHAlert-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -590,6 +593,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.chengdu.CHAlert;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "$SRCROOT/CHAlert/CHAlert-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
